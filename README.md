@@ -1,12 +1,12 @@
 # AI Developer Assistant
 
-A learning project for developing AI-native engineering skills.
+A learning project for developing AI-native engineering skills
 
 ## Goal
 
 Build an AI-powered developer assistant while learning:
 
-- Python.
+- Python
 - APIs
 - LLMs
 - Context engineering

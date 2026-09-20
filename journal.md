@@ -4,7 +4,7 @@
 
 ### Day 1
 
-yes.
+yes
 
 #### What I learned
 
