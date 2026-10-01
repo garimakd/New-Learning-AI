@@ -51,14 +51,12 @@ pipeline {
                         }
                     }
                 }
+                archiveArtifacts artifacts: 'New-Learning-AI/dist/**', fingerprint: true
             }
         }
     }
 
     post {
-        success {
-            archiveArtifacts artifacts: 'New-Learning-AI/dist/**', fingerprint: true
-        }
         always {
             deleteDir()
         }
