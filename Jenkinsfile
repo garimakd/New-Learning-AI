@@ -1,8 +1,8 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:22-bookworm-slim'
-        }
+    agent any
+
+    environment {
+        PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
     }
 
     options {
@@ -20,33 +20,43 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm ci'
+                script {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
+                        dir('New-Learning-AI') {
+                            sh 'npm ci'
+                        }
+                    }
                 }
             }
         }
 
         stage('Type Check') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm run typecheck'
+                script {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
+                        dir('New-Learning-AI') {
+                            sh 'npm run typecheck'
+                        }
+                    }
                 }
             }
         }
 
         stage('Build') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm run build'
+                script {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
+                        dir('New-Learning-AI') {
+                            sh 'npm run build'
+                        }
+                    }
                 }
+                archiveArtifacts artifacts: 'New-Learning-AI/dist/**', fingerprint: true
             }
         }
     }
 
     post {
-        success {
-            archiveArtifacts artifacts: 'New-Learning-AI/dist/**', fingerprint: true
-        }
         always {
             deleteDir()
         }
