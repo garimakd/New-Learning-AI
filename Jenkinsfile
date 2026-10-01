@@ -21,7 +21,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    docker.image('node:22-bookworm-slim').inside {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
                         dir('New-Learning-AI') {
                             sh 'npm ci'
                         }
@@ -33,7 +33,7 @@ pipeline {
         stage('Type Check') {
             steps {
                 script {
-                    docker.image('node:22-bookworm-slim').inside {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
                         dir('New-Learning-AI') {
                             sh 'npm run typecheck'
                         }
@@ -45,7 +45,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    docker.image('node:22-bookworm-slim').inside {
+                    docker.image('node:22-bookworm-slim').inside("-e HOME=${env.WORKSPACE_TMP} -e NPM_CONFIG_CACHE=${env.WORKSPACE_TMP}/.npm") {
                         dir('New-Learning-AI') {
                             sh 'npm run build'
                         }
