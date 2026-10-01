@@ -1,0 +1,29 @@
+{
+  "name": "new-learning-ai",
+  "version": "1.0.0",
+  "description": "A learning project for developing AI-native engineering skills",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --outDir dist --rootDir src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garimakd/New-Learning-AI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/garimakd/New-Learning-AI/issues"
+  },
+  "homepage": "https://github.com/garimakd/New-Learning-AI#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
