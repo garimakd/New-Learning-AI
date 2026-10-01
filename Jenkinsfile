@@ -1,8 +1,8 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:22-bookworm-slim'
-        }
+    agent any
+
+    environment {
+        PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
     }
 
     options {
@@ -20,24 +20,36 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm ci'
+                script {
+                    docker.image('node:22-bookworm-slim').inside {
+                        dir('New-Learning-AI') {
+                            sh 'npm ci'
+                        }
+                    }
                 }
             }
         }
 
         stage('Type Check') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm run typecheck'
+                script {
+                    docker.image('node:22-bookworm-slim').inside {
+                        dir('New-Learning-AI') {
+                            sh 'npm run typecheck'
+                        }
+                    }
                 }
             }
         }
 
         stage('Build') {
             steps {
-                dir('New-Learning-AI') {
-                    sh 'npm run build'
+                script {
+                    docker.image('node:22-bookworm-slim').inside {
+                        dir('New-Learning-AI') {
+                            sh 'npm run build'
+                        }
+                    }
                 }
             }
         }
